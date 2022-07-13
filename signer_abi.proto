@@ -1,0 +1,34 @@
+syntax = "proto3";
+package protoc;
+option java_package = "com.keystone.cold.protobuf";
+option java_outer_classname = "SignerABIProtoc";
+
+message CommandRequest {
+    uint32 request_id = 1;
+    oneof request_data {
+        SignRequest sign_request = 2;
+    }
+}
+
+
+message CommandResponse {
+    uint32 response_id = 1;
+    uint32 status = 2;
+    string response = 3;
+    string error_message = 4;
+}
+
+message SignRequest {
+    uint32 seed_id = 1;
+    enum SignAlgo {
+        secp256k1 = 0;
+        secp256R1 = 1;
+        ed25519 = 2;
+        rsa = 3;
+    }
+    SignAlgo algo = 2;
+    string password = 3;
+    string data = 4;
+    string derivation_path = 5;
+    string port_name = 6;
+}
